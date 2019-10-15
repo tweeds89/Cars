@@ -1,0 +1,8 @@
+services:
+    # Repository
+    meal_repository:
+        class: CarBundle\Repository\CarBrandRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - CarBundle\Entity\CarBrand
+            -
