@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+
+    <div class="form-inline">
+        {{ form_widget(form.name) }}
+        {{ form_widget(form.submit) }}
+    </div>
+    {{ form_errors(form.name) }}
+
+
+    {{ form_end(form) }}
+    {% if carBrands is not empty %}
+        <div class="col-lg-6">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="col-lg-2">Marka</th>
+                    <th class="col-lg-1">Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for carBrand in carBrands %}
+                    <tr>
+                        <td>{{ carBrand.name }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path("car_brand_edit", {'carBrand': carBrand.id}) }}" role="button">Edytuj</a>
+                            <a class="btn btn-danger delete-button" href="{{ path("car_brand_delete", {'carBrand': carBrand.id}) }}" role="button">Usuń</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    {% include "/templates/confirmation-dialog-template.html.twig" %}
+    {% include "/templates/alert-dialog-template.html.twig" %}
+{% endblock %}

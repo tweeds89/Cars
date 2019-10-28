@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <div class="form-inline">
+        {{ form_widget(form.carBrand) }}
+        {{ form_widget(form.model) }}
+        {{ form_widget(form.productionYear, {'attr': {'style': 'width:150', 'placeholder': 'Rok produkcji'}}) }}
+        {{ form_widget(form.fuelType) }}
+        {{ form_widget(form.submit) }}
+    </div>
+    {{ form_end(form) }}
+    <a class="btn btn-success" href="{{ path("cars_import") }}" role="button" target="_blank">Export</a>
+    {% if cars is not empty %}
+        <div class="col-lg-12">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="col-lg-2">Marka</th>
+                    <th class="col-lg-2">Model</th>
+                    <th class="col-lg-2">Rok produkcji</th>
+                    <th class="col-lg-2">Paliwo</th>
+                    <th class="col-lg-2">Akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for car in cars %}
+                    <tr>
+                        <td>{{ car.carBrand }}</td>
+                        <td>{{ car.model }}</td>
+                        <td>{{ car.productionYear }}</td>
+                        <td>{{ car.fuelType }}</td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path("car_edit", {'car': car.id}) }}" role="button">Edytuj</a>
+                            <a class="btn btn-danger delete-button" href="{{ path("car_delete", {'car': car.id}) }}" role="button">Usuń</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+    {% include "/templates/confirmation-dialog-template.html.twig" %}
+    {% include "/templates/alert-dialog-template.html.twig" %}
+{% endblock %}
