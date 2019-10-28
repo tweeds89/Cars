@@ -5,12 +5,14 @@ namespace CarBundle\Entity;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Id;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Class CarBrand
  * @package CarBundle\Entity
  * @ORM\Entity(repositoryClass="CarBundle\Repository\CarBrandRepository")
  * @ORM\Table(name="car_brands")
+ * @UniqueEntity("name", message="Podana marka już istnieje")
  */
 class CarBrand
 {
@@ -23,15 +25,15 @@ class CarBrand
 
     /**
      * @var string
-     * @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, unique=true, nullable=false)
      */
-    protected $name = "";
+    protected $name;
 
     /**
-     * @var CarModel[]|Collection $carModels
-     * @ORM\OneToMany(targetEntity="CarBundle\Entity\CarModel", mappedBy="carBrand")
+     * @var Car[]|Collection $carModels
+     * @ORM\OneToMany(targetEntity="CarBundle\Entity\Car", mappedBy="carBrand")
      */
-    protected $carModels;
+    protected $cars;
 
     /**
      * @return mixed
@@ -54,7 +56,7 @@ class CarBrand
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -63,27 +65,35 @@ class CarBrand
      * @param string $name
      * @return CarBrand
      */
-    public function setName($name)
+    public function setName(string $name): CarBrand
     {
         $this->name = $name;
         return $this;
     }
 
     /**
-     * @return CarModel[]|Collection
+     * @return Car[]|Collection
      */
-    public function getCarModels()
+    public function getCars()
     {
-        return $this->carModels;
+        return $this->cars;
     }
 
     /**
-     * @param CarModel[]|Collection $carModels
+     * @param Car[]|Collection $cars
      * @return CarBrand
      */
-    public function setCarModels($carModels)
+    public function setCars($cars)
     {
-        $this->carModels = $carModels;
+        $this->cars = $cars;
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

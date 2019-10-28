@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Id;
 
 /**
- * Class CarModel
+ * Class Car
  * @package CarBundle\Entity
- * @ORM\Entity(repositoryClass="CarBundle\Repository\CarModelRepository")
- * @ORM\Table(name="car_models")
+ * @ORM\Entity(repositoryClass="CarBundle\Repository\CarRepository")
+ * @ORM\Table(name="cars")
  */
-class CarModel
+class Car
 {
     /**
      * @Id
@@ -22,7 +22,7 @@ class CarModel
 
     /**
      * @var CarBrand $carBrand
-     * @ORM\ManyToOne(targetEntity="CarBundle\Entity\CarBrand", inversedBy="carModels")
+     * @ORM\ManyToOne(targetEntity="CarBundle\Entity\CarBrand", inversedBy="cars")
      * @ORM\JoinColumn(name="car_brand_id", nullable=false)
      */
     protected $carBrand;
@@ -34,16 +34,16 @@ class CarModel
     protected $model;
 
     /**
-     * @var \DateTime $productionDate
-     * @ORM\Column(name="production_date", type="date", nullable=false)
+     * @var \int $productionYear
+     * @ORM\Column(name="production_year", type="integer", nullable=false)
      */
-    protected $productionDate;
+    protected $productionYear;
 
     /**
-     * @var string $engineType
-     * @ORM\Column(name="engine_type", type="string", length=255, nullable=false)
+     * @var string $fuelType
+     * @ORM\Column(name="fuel_type", type="string", length=255, nullable=false)
      */
-    protected $engineType;
+    protected $fuelType;
 
     /**
      * @return mixed
@@ -55,7 +55,7 @@ class CarModel
 
     /**
      * @param mixed $id
-     * @return CarModel
+     * @return Car
      */
     public function setId($id)
     {
@@ -73,7 +73,7 @@ class CarModel
 
     /**
      * @param CarBrand $carBrand
-     * @return CarModel
+     * @return Car
      */
     public function setCarBrand($carBrand)
     {
@@ -91,7 +91,7 @@ class CarModel
 
     /**
      * @param string $model
-     * @return CarModel
+     * @return Car
      */
     public function setModel($model)
     {
@@ -100,38 +100,38 @@ class CarModel
     }
 
     /**
-     * @return \DateTime
+     * @return int
      */
-    public function getProductionDate()
+    public function getProductionYear(): ?int
     {
-        return $this->productionDate;
+        return $this->productionYear;
     }
 
     /**
-     * @param \DateTime $productionDate
-     * @return CarModel
+     * @param int $productionYear
+     * @return Car
      */
-    public function setProductionDate($productionDate)
+    public function setProductionYear(int $productionYear): Car
     {
-        $this->productionDate = $productionDate;
+        $this->productionYear = $productionYear;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getEngineType()
+    public function getFuelType(): ?string
     {
-        return $this->engineType;
+        return $this->fuelType;
     }
 
     /**
-     * @param string $engineType
-     * @return CarModel
+     * @param string $fuelType
+     * @return Car
      */
-    public function setEngineType($engineType)
+    public function setFuelType(string $fuelType): Car
     {
-        $this->engineType = $engineType;
+        $this->fuelType = $fuelType;
         return $this;
     }
 }
