@@ -2,7 +2,7 @@
 
 namespace CarBundle\Form;
 
-use CarBundle\Entity\Car;
+use CarBundle\Models\CarsFilterModel;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -13,10 +13,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class CarType
+ * Class CarsFilterType
  * @package CarBundle\Form
  */
-class CarType extends AbstractType
+class CarsFilterType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -29,22 +29,25 @@ class CarType extends AbstractType
         $builder->add('carBrand', EntityType::class, [
             'label' => 'Marka',
             'class' => 'CarBundle\Entity\CarBrand',
-        ])->add('model', TextType::class, [
+            'placeholder' => 'Wszystkie',
+            'required' => false
+        ])->add('carModel', TextType::class, [
             'label' => 'Model',
-            'required' => true
+            'required' => false
         ])->add('productionYear', IntegerType::class, [
-            'label' => 'Data produkcji',
-            'required' => true
+            'label' => 'Rok produkcji',
+            'required' => false,
         ])->add('fuelType', ChoiceType::class, [
-            'label' => 'Typ paliwa',
-            'required' => true,
+            'label' => 'Rodzaj paliwa',
+            'placeholder' => 'Wszystkie',
             'choices' => [
                 'Benzyna' => 'Benzyna',
                 'Diesel' => 'Diesel',
                 'LPG' => 'LPG'
-            ]
-        ])->add('submit', SubmitType::class, [
-            'label' => 'Zapisz'
+            ],
+            'required' => false
+        ])->add('show', SubmitType::class, [
+            'label' => 'Szukaj'
         ]);
     }
 
@@ -54,7 +57,7 @@ class CarType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Car::class
+            'data_class' => CarsFilterModel::class
         ]);
     }
 }

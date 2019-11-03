@@ -3,7 +3,6 @@
 namespace CarBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Internal\Hydration\IterableResult;
 
 /**
  * Class CarRepository
@@ -12,13 +11,34 @@ use Doctrine\ORM\Internal\Hydration\IterableResult;
 class CarRepository extends EntityRepository
 {
     /**
-     * @return IterableResult
+     * @param null $carBrand
+     * @param null $carModel
+     * @param null $productionYear
+     * @param null $fuelType
+     * @return array
      */
-    public function findCars(): IterableResult
+    public function findCars($carBrand = null, $carModel= null, $productionYear = null, $fuelType = null): array
     {
-        return $this->createQueryBuilder('cars')
-            ->select()
-            ->getQuery()
-            ->iterate();
+        $qb = $this->createQueryBuilder('cars');
+
+        if (!is_null($carBrand)) {
+            $qb->leftJoin('cars.carBrand', 'carBrand')
+                ->where('carBrand.name LIKE :name')
+                ->setParameter('name', $carBrand);
+        }
+        if (!is_null($carModel)) {
+            $qb->andWhere('cars.model LIKE :model')
+                ->setParameter('model', $carModel);
+        }
+        if (!is_null($productionYear)) {
+            $qb->andWhere('cars.productionYear = :productionYear')
+                ->setParameter('productionYear', $productionYear);
+        }
+        if (!is_null($fuelType)) {
+            $qb->andWhere('cars.fuelType = :fuelType')
+                ->setParameter('fuelType', $fuelType);
+        }
+
+        return $qb->getQuery()->getResult();
     }
 }

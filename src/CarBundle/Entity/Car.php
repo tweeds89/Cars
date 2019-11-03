@@ -34,7 +34,7 @@ class Car
     protected $model;
 
     /**
-     * @var \int $productionYear
+     * @var int $productionYear
      * @ORM\Column(name="production_year", type="integer", nullable=false)
      */
     protected $productionYear;

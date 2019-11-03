@@ -1,0 +1,3 @@
+cars:
+    resource: '@CarBundle/Resources/config/routing.yml'
+    prefix: /cars
