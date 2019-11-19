@@ -1,8 +1,19 @@
 services:
     # Repository
-    meal_repository:
+    car_brand_repository:
         class: CarBundle\Repository\CarBrandRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
             - CarBundle\Entity\CarBrand
-            -
+    car_repository:
+        class: CarBundle\Repository\CarRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - CarBundle\Entity\Car
+
+    #Managers
+    cars_export_manager:
+        class: CarBundle\Managers\CarsExportToExcelManager
+        public: true
+        arguments:
+            - '@car_repository'

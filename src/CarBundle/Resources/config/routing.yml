@@ -1,0 +1,34 @@
+car_brand_list:
+    path: /car-brand
+    controller: CarBundle:CarBrand:index
+    methods: [GET, POST]
+car_brand_edit:
+    path: /car-brand-edit/{carBrand}
+    controller: CarBundle:CarBrand:editCarBrand
+    methods: [GET, POST]
+car_brand_delete:
+    path: /car-brand-delete/{carBrand}
+    controller: CarBundle:CarBrand:deleteCarBrand
+    methods: [GET, DELETE]
+
+car_list:
+    path: /car-list
+    controller: CarBundle:Car:index
+    methods: [GET, POST]
+car_add:
+    path: /car-add
+    controller: CarBundle:Car:addCar
+    methods: [GET, POST]
+car_edit:
+    path: /car-edit/{car}
+    controller: CarBundle:Car:editCar
+    methods: [GET, POST]
+car_delete:
+    path: /car-delete/{car}
+    controller: CarBundle:Car:deleteCar
+    methods: [GET, DELETE]
+
+cars_export:
+    path: /car-export
+    controller: CarBundle:Car:exportCars
+    methods: [GET]

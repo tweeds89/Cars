@@ -1,16 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ form_start(form) }}
     <div class="form-inline">
-        {{ form_widget(form.carBrand) }}
-        {{ form_widget(form.model) }}
-        {{ form_widget(form.productionYear, {'attr': {'style': 'width:150', 'placeholder': 'Rok produkcji'}}) }}
-        {{ form_widget(form.fuelType) }}
-        {{ form_widget(form.submit) }}
+        {{ form(form) }}
     </div>
-    {{ form_end(form) }}
-    <a class="btn btn-success" href="{{ path("cars_import") }}" role="button" target="_blank">Export</a>
+    <div>
+        <a class="btn btn-primary" href="{{ path("car_add") }}" role="button" style="margin-bottom: 10">Dodaj
+            samochód</a>
+        <a class="btn btn-success export-button" href="{{ path("cars_export") }}" role="button" target="_blank"
+           style="margin-bottom: 10">Export tabeli</a>
+    </div>
     {% if cars is not empty %}
         <div class="col-lg-12">
             <table class="table table-striped">
@@ -32,7 +31,8 @@
                         <td>{{ car.fuelType }}</td>
                         <td>
                             <a class="btn btn-primary" href="{{ path("car_edit", {'car': car.id}) }}" role="button">Edytuj</a>
-                            <a class="btn btn-danger delete-button" href="{{ path("car_delete", {'car': car.id}) }}" role="button">Usuń</a>
+                            <a class="btn btn-danger delete-button" href="{{ path("car_delete", {'car': car.id}) }}"
+                               role="button">Usuń</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -42,4 +42,12 @@
     {% endif %}
     {% include "/templates/confirmation-dialog-template.html.twig" %}
     {% include "/templates/alert-dialog-template.html.twig" %}
+    <script>
+        $(document).ready(function () {
+            var cars = {{ cars|json_encode|raw }};
+            if (cars.length === 0) {
+                $(".export-button").css("display", "none");
+            }
+        });
+    </script>
 {% endblock %}
