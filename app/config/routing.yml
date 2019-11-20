@@ -1,3 +1,6 @@
+homepage:
+    resource: '@HomepageBundle/Resources/config/routing.yml'
+    prefix: /
 cars:
     resource: '@CarBundle/Resources/config/routing.yml'
     prefix: /cars

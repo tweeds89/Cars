@@ -47,7 +47,10 @@ class CarsFilterType extends AbstractType
             ],
             'required' => false
         ])->add('show', SubmitType::class, [
-            'label' => 'Szukaj'
+            'label' => 'Szukaj',
+            'attr' => [
+                'style' => 'margin-left: 30px'
+            ]
         ]);
     }
 
